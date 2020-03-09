@@ -3,16 +3,23 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { api } from "./api";
+import { ApolloProvider } from "react-apollo";
+import ApolloCLient from "apollo-boost";
 
+const client = new ApolloCLient({
+  uri: "https://api.8base.com/ck7kwiee0000208jrfyt7fceb"
+});
 class Page extends React.Component {
   state = {
     stories: []
   };
-  componentDidMount() {
-    api.get("topstories.json?print=pretty").then(res => {
-      const stories = res.data;
-      this.setState({ stories });
+  async componentDidMount() {
+    let stories = [];
+    await api.get("topstories.json?print=pretty").then(res => {
+      stories = res.data;
     });
+    console.log(stories);
+    this.setState({ stories });
   }
 
   render() {
@@ -26,7 +33,12 @@ class Page extends React.Component {
   }
 }
 
-ReactDOM.render(<Page />, document.getElementById("root"));
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <Page />
+  </ApolloProvider>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
