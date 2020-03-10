@@ -3,12 +3,10 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { api } from "./api";
-import { ApolloProvider } from "react-apollo";
-import ApolloCLient from "apollo-boost";
 
-const client = new ApolloCLient({
-  uri: "https://api.8base.com/ck7kwiee0000208jrfyt7fceb"
-});
+const { GraphQLServer } = require("graphql-yoga");
+const fetch = require("node-fetch");
+
 class Page extends React.Component {
   state = {
     stories: []
@@ -33,12 +31,7 @@ class Page extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <ApolloProvider client={client}>
-    <Page />
-  </ApolloProvider>,
-  document.getElementById("root")
-);
+ReactDOM.render(<Page />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
