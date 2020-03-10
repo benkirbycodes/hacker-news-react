@@ -1,0 +1,10 @@
+type Story {
+  by: String!
+  id: Int!
+  title: String!
+  url: String!
+}
+
+type Query {
+  topstories: [Story!]!
+}
